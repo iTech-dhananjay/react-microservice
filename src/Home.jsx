@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Stack, Flex, Heading, Text, Image, Button, SimpleGrid } from "@chakra-ui/react";
 import axios from "axios";
 
@@ -18,7 +18,7 @@ const Card = ({ amount, img, checkoutHandler }) => (
         </Box>
         <Box p="6">
             <Stack spacing="3">
-                <Heading as="h3" size="lg" color="teal.600">₹{amount / 100}</Heading>
+                <Heading as="h3" size="lg" color="teal.600">₹{amount / 100000}</Heading>
                 <Text color="gray.600">Get the best product at the best price!</Text>
                 <Button colorScheme="teal" onClick={() => checkoutHandler(amount)}>
                     Buy Now
@@ -31,20 +31,37 @@ const Card = ({ amount, img, checkoutHandler }) => (
 const Home = () => {
     const checkoutHandler = async (amount) => {
         try {
+            console.log(amount,'amount')
+
             const { data:  order  } = await axios.post("http://localhost:4009/api/payments/create-payment", {
                 amount,
                 currency: "USD",
             });
             const approvalUrl = order.links.find(link => link.rel == 'approval_url').href;
-
-            // const { data: { key } } = await axios.get("http://localhost:4009/api/payments/execute-payment");
-
             window.location.href = approvalUrl;
         } catch (error) {
             console.error("Payment error:", error);
         }
-
     };
+
+    const executePayment = async (payerId, paymentId) => {
+        try {
+            const { data } = await axios.post(`http://localhost:4009/api/payments/execute-payment?payerId=${payerId}&paymentId=${paymentId}`);
+            console.log("Payment executed successfully:", data);
+        } catch (error) {
+            console.error("Payment execution error:", error);
+        }
+    };
+
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const payerId = urlParams.get('payerId');
+        const paymentId = urlParams.get('paymentId');
+
+        if (payerId && paymentId) {
+            executePayment(payerId, paymentId);
+        }
+    }, []);
 
     return (
         <Box p={5} bg="gray.100" minH="100vh">
