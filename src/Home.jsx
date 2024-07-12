@@ -32,8 +32,9 @@ const Home = () => {
     const checkoutHandler = async (amount) => {
         const { data: { key } } = await axios.get("http://localhost:4009/api/getkey");
 
-        const { data: { order } } = await axios.post("http://localhost:4009/api/checkout", {
-            amount
+        const { data: { order } } = await axios.post("http://localhost:4009/api/payments/create-payment", {
+            amount,
+            currency: "USD",
         });
 
         const options = {
@@ -67,64 +68,76 @@ const Home = () => {
                 <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} spacing="6">
                     <Card
                         amount={500000}
-                        img="https://res.cloudinary.com/dqkag6b79/image/upload/v1720782126/rei-yamazaki--76uBPIqaKE-unsplash_zhjxy4.jpg"
+                        img="https://res.cloudinary.com/dqkag6b79/image/upload/v1720783567/pexels-athena-2582937_oqpyvk.jpg"
                         checkoutHandler={checkoutHandler}
                     />
                     <Card
-                        amount={3000}
+                        amount={300000}
                         img="http://i1.adis.ws/i/canon/eos-r5_front_rf24-105mmf4lisusm_32c26ad194234d42b3cd9e582a21c99b"
                         checkoutHandler={checkoutHandler}
                     />
                     <Card
-                        amount={3000}
+                        amount={100000}
+                        img="https://res.cloudinary.com/dqkag6b79/image/upload/v1720783567/pexels-alessandro-oliverio-611273-1472443_ythjmq.jpg"
+                        checkoutHandler={checkoutHandler}
+                    />
+                    <Card
+                        amount={9000000}
+                        img="https://res.cloudinary.com/dqkag6b79/image/upload/v1720783566/pexels-filippo-bergamaschi-202684-986772_pppiuc.jpg"
+                        checkoutHandler={checkoutHandler}
+                    />
+                    <Card
+                        amount={8000000}
+                        img="https://res.cloudinary.com/dqkag6b79/image/upload/v1720783566/pexels-pixabay-159201_x4arbp.jpg"
+                        checkoutHandler={checkoutHandler}
+                    />
+                    <Card
+                        amount={4000000}
+                        img="https://res.cloudinary.com/dqkag6b79/image/upload/v1720783566/pexels-pixabay-301792_u4bwjo.jpg"
+                        checkoutHandler={checkoutHandler}
+                    />
+                    <Card
+                        amount={1800000}
+                        img="https://res.cloudinary.com/dqkag6b79/image/upload/v1720783566/pexels-pok-rie-33563-707399_wajd6s.jpg"
+                        checkoutHandler={checkoutHandler}
+                    />
+                    <Card
+                        amount={8900000}
+                        img="https://res.cloudinary.com/dqkag6b79/image/upload/v1720783760/pexels-joshsorenson-1054397_fqlxxl.jpg"
+                        checkoutHandler={checkoutHandler}
+                    />
+                    <Card
+                        amount={4500000}
+                        img="https://res.cloudinary.com/dqkag6b79/image/upload/v1720783761/pexels-jeshoots-4316_hnacpr.jpg"
+                        checkoutHandler={checkoutHandler}
+                    />
+                    <Card
+                    amount={750000}
+                    img="https://res.cloudinary.com/dqkag6b79/image/upload/v1720783760/pexels-pavel-danilyuk-8438918_du5wbe.jpg"
+                    checkoutHandler={checkoutHandler}
+                   />
+                    <Card
+                        amount={9000000}
                         img="http://i1.adis.ws/i/canon/eos-r5_front_rf24-105mmf4lisusm_32c26ad194234d42b3cd9e582a21c99b"
                         checkoutHandler={checkoutHandler}
                     />
                     <Card
-                        amount={3000}
-                        img="http://i1.adis.ws/i/canon/eos-r5_front_rf24-105mmf4lisusm_32c26ad194234d42b3cd9e582a21c99b"
+                        amount={870000}
+                        img="https://res.cloudinary.com/dqkag6b79/image/upload/v1720783567/pexels-alessandro-oliverio-611273-1472443_ythjmq.jpg"
                         checkoutHandler={checkoutHandler}
                     />
                     <Card
-                        amount={3000}
-                        img="http://i1.adis.ws/i/canon/eos-r5_front_rf24-105mmf4lisusm_32c26ad194234d42b3cd9e582a21c99b"
+                        amount={958000}
+                        img="https://res.cloudinary.com/dqkag6b79/image/upload/v1720783566/pexels-filippo-bergamaschi-202684-986772_pppiuc.jpg"
                         checkoutHandler={checkoutHandler}
                     />
                     <Card
-                        amount={3000}
-                        img="http://i1.adis.ws/i/canon/eos-r5_front_rf24-105mmf4lisusm_32c26ad194234d42b3cd9e582a21c99b"
+                        amount={456000}
+                        img="https://res.cloudinary.com/dqkag6b79/image/upload/v1720783566/pexels-pixabay-159201_x4arbp.jpg"
                         checkoutHandler={checkoutHandler}
                     />
-                    <Card
-                        amount={500000}
-                        img="https://res.cloudinary.com/dqkag6b79/image/upload/v1720782126/rei-yamazaki--76uBPIqaKE-unsplash_zhjxy4.jpg"
-                        checkoutHandler={checkoutHandler}
-                    />
-                    <Card
-                        amount={3000}
-                        img="http://i1.adis.ws/i/canon/eos-r5_front_rf24-105mmf4lisusm_32c26ad194234d42b3cd9e582a21c99b"
-                        checkoutHandler={checkoutHandler}
-                    />
-                    <Card
-                        amount={3000}
-                        img="http://i1.adis.ws/i/canon/eos-r5_front_rf24-105mmf4lisusm_32c26ad194234d42b3cd9e582a21c99b"
-                        checkoutHandler={checkoutHandler}
-                    />
-                    <Card
-                        amount={3000}
-                        img="http://i1.adis.ws/i/canon/eos-r5_front_rf24-105mmf4lisusm_32c26ad194234d42b3cd9e582a21c99b"
-                        checkoutHandler={checkoutHandler}
-                    />
-                    <Card
-                        amount={3000}
-                        img="http://i1.adis.ws/i/canon/eos-r5_front_rf24-105mmf4lisusm_32c26ad194234d42b3cd9e582a21c99b"
-                        checkoutHandler={checkoutHandler}
-                    />
-                    <Card
-                        amount={3000}
-                        img="http://i1.adis.ws/i/canon/eos-r5_front_rf24-105mmf4lisusm_32c26ad194234d42b3cd9e582a21c99b"
-                        checkoutHandler={checkoutHandler}
-                    />
+
+
                 </SimpleGrid>
             </Flex>
         </Box>
