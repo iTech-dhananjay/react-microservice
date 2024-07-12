@@ -30,36 +30,22 @@ const Card = ({ amount, img, checkoutHandler }) => (
 
 const Home = () => {
     const checkoutHandler = async (amount) => {
-        const { data: { key } } = await axios.get("http://localhost:4009/api/getkey");
 
-        const { data: { order } } = await axios.post("http://localhost:4009/api/payments/create-payment", {
-            amount,
-            currency: "USD",
-        });
+        try {
+            const { data: { order } } = await axios.post("http://localhost:4009/api/payments/create-payment", {
+                amount,
+                currency: "USD",
+            });
+            console.log(app)
+            const approvalUrl = order.links.find(link => link.rel == 'approval_url').href;
 
-        const options = {
-            key,
-            amount: order.amount,
-            currency: "INR",
-            name: "Dhananjay ITech",
-            description: "Node With PayPal",
-            image: "https://avatars.githubusercontent.com/u/25058652?v=4",
-            order_id: order.id,
-            callback_url: "http://localhost:4009/api/paymentverification",
-            prefill: {
-                name: "Gaurav Kumar",
-                email: "gaurav.kumar@example.com",
-                contact: "9999999999"
-            },
-            notes: {
-                "address": "Razorpay Corporate Office"
-            },
-            theme: {
-                "color": "#121212"
-            }
-        };
-        const razor = new window.Razorpay(options);
-        razor.open();
+            const { data: { key } } = await axios.get("http://localhost:4009/api/payments/execute-payment");
+
+            window.location.href = approvalUrl;
+        } catch (error) {
+            console.error("Payment error:", error);
+        }
+
     };
 
     return (
