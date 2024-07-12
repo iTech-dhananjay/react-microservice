@@ -30,16 +30,14 @@ const Card = ({ amount, img, checkoutHandler }) => (
 
 const Home = () => {
     const checkoutHandler = async (amount) => {
-
         try {
-            const { data: { order } } = await axios.post("http://localhost:4009/api/payments/create-payment", {
+            const { data:  order  } = await axios.post("http://localhost:4009/api/payments/create-payment", {
                 amount,
                 currency: "USD",
             });
-            console.log(app)
             const approvalUrl = order.links.find(link => link.rel == 'approval_url').href;
 
-            const { data: { key } } = await axios.get("http://localhost:4009/api/payments/execute-payment");
+            // const { data: { key } } = await axios.get("http://localhost:4009/api/payments/execute-payment");
 
             window.location.href = approvalUrl;
         } catch (error) {
