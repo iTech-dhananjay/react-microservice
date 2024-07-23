@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Box, Stack, Flex, Heading, Text, Image, Button, SimpleGrid } from "@chakra-ui/react";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 const Card = ({ amount, img, checkoutHandler }) => (
     <Box
@@ -29,39 +30,42 @@ const Card = ({ amount, img, checkoutHandler }) => (
 );
 
 const Home = () => {
+    const location = useLocation();
+
     const checkoutHandler = async (amount) => {
         try {
-            console.log(amount,'amount')
-
-            const { data:  order  } = await axios.post("http://localhost:4009/api/payments/create-payment", {
+            let amount = 1
+            const { data: order } = await axios.post(" http://localhost:4009/payment-gateway/paypal/create-payment", {
                 amount,
                 currency: "USD",
             });
-            const approvalUrl = order.links.find(link => link.rel == 'approval_url').href;
+            const approvalUrl = order.links.find(link => link.rel === 'approval_url').href;
             window.location.href = approvalUrl;
         } catch (error) {
             console.error("Payment error:", error);
         }
     };
 
-    const executePayment = async (payerId, paymentId) => {
+    const executePayment = async (paymentId, payerId) => {
         try {
-            const { data } = await axios.post(`http://localhost:4009/api/payments/execute-payment?payerId=${payerId}&paymentId=${paymentId}`);
-            console.log("Payment executed successfully:", data);
+            const { data } = await axios.get(`http://localhost:4009/api/success?paymentId=${paymentId}&PayerID=${payerId}`);
+            console.log('Payment executed:', data);
+            alert('Payment successful!');
         } catch (error) {
-            console.error("Payment execution error:", error);
+            console.error('Error executing payment:', error);
+            alert('Payment execution failed!');
         }
     };
 
     useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const payerId = urlParams.get('payerId');
-        const paymentId = urlParams.get('paymentId');
+        const searchParams = new URLSearchParams(location.search);
+        const paymentId = searchParams.get('paymentId');
+        const payerId = searchParams.get('PayerID');
 
-        if (payerId && paymentId) {
-            executePayment(payerId, paymentId);
+        if (paymentId && payerId) {
+            executePayment(paymentId, payerId);
         }
-    }, []);
+    }, [location.search]);
 
     return (
         <Box p={5} bg="gray.100" minH="100vh">
