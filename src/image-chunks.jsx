@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 
 const uploadDir = 'http://localhost:4009/video-image-stream/image/upload-chunk';
+const imageListUrl = 'http://localhost:4009/video-image-stream/image/image-list';
 const CHUNK_SIZE = 1 * 1024 * 1024; // 1MB
 
 const ImageUploader = () => {
     const [files, setFiles] = useState([]);
     const [uploadProgress, setUploadProgress] = useState({});
+    const [imageList, setImageList] = useState([]);
 
     const handleFileChange = (e) => {
         setFiles(e.target.files);
@@ -54,11 +56,22 @@ const ImageUploader = () => {
         alert('Upload complete');
     };
 
+    const fetchImageList = async () => {
+        try {
+            const response = await fetch(imageListUrl);
+            const data = await response.json();
+            setImageList(data.images);
+        } catch (error) {
+            console.error('Error fetching image list:', error);
+        }
+    };
+
     return (
         <div style={containerStyle}>
             <h2 style={headerStyle}>Upload Images in Chunks</h2>
             <input type="file" multiple onChange={handleFileChange} style={inputStyle} />
             <button onClick={handleUpload} style={buttonStyle}>Upload</button>
+            <button onClick={fetchImageList} style={buttonStyle}>Show Image List</button>
 
             {Object.keys(uploadProgress).length > 0 && (
                 <div style={progressContainerStyle}>
@@ -77,6 +90,36 @@ const ImageUploader = () => {
                             <p>{uploadProgress[fileName].uploadedChunks}/{uploadProgress[fileName].totalChunks} chunks uploaded</p>
                         </div>
                     ))}
+                </div>
+            )}
+
+            {imageList.length > 0 && (
+                <div style={boxStyle}>
+                    <h3 style={tableHeaderStyle}>Image List</h3>
+                    <table style={tableStyle}>
+                        <thead style={{border: '1px solid #ddd'}}>
+                        <tr style={{ border: '2px solid #ddd' }}>
+                            <th>#</th>
+                            <th>Filename</th>
+                            <th>File Path</th>
+                            <th>File Size</th>
+                            <th>MIME Type</th>
+                            <th>Created At</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {imageList.map((image, index) => (
+                            <tr style={{ border: '2px solid #ddd' }} key={image._id}>
+                                <td style={{ border: '2px solid #ddd', paddingLeft:"5px" }}>{index + 1}</td>
+                                <td style={{ border: '2px solid #ddd' }}> {image.filename}</td>
+                                <td style={{ border: '2px solid #ddd' }}>{image.filePath}</td>
+                                <td style={{ border: '2px solid #ddd' }}>{image.fileSize}</td>
+                                <td style={{ border: '2px solid #ddd' }}>{image.mimeType}</td>
+                                <td>{new Date(image.createdAt).toLocaleString()}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
                 </div>
             )}
         </div>
@@ -137,6 +180,32 @@ const progressBarStyle = {
     textAlign: 'center',
     lineHeight: '25px',
     color: '#fff',
+};
+
+const boxStyle = {
+    marginTop: '20px',
+    padding: '20px',
+    border: '1px solid #ddd',
+    borderRadius: '5px',
+    boxShadow: '0 0 10px rgba(0,0,0,0.1)',
+    backgroundColor: '#fff',
+};
+
+const tableHeaderStyle = {
+    marginBottom: '10px',
+    textAlign: 'center',
+};
+
+const tableStyle = {
+    width: '100%',
+    borderCollapse: 'collapse',
+    marginTop: '10px',
+};
+
+const thTdStyle = {
+    border: '1px solid #ddd',
+    padding: '8px',
+    textAlign: 'left',
 };
 
 export default ImageUploader;
