@@ -19,7 +19,7 @@ const videoPlayerStyle = {
 const Video = () => {
     return (
         <div style={videoContainerStyle}>
-            <video style={videoPlayerStyle} controls src="http://localhost:4009/video-stream/stream/video"></video>
+            <video style={videoPlayerStyle} controls src="http://localhost:4009/video-image-stream/video/play"></video>
         </div>
     );
 };
