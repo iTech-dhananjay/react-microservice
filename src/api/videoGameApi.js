@@ -1,4 +1,4 @@
-const API_URL = '/api/video-game';
+const API_URL = 'http://localhost:4009/video-game/play';
 
 export const startGame = async () => {
     const response = await fetch(`${API_URL}/start`, { method: 'POST' });
