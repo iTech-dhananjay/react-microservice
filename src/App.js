@@ -3,6 +3,8 @@ import Home from "./Home";
 import PaymentSuccess from "./payment-success";
 import Video from './videos-stream'
 import ImageUploader from "./image-chunks";
+import ChatPage from "./chatPage";
+import VideoGamePage from "./pages/VideoGamePage";
 
 function App() {
     return (
@@ -12,6 +14,8 @@ function App() {
                 <Route path="/paymentsuccess" element={<PaymentSuccess />} />
                 <Route path="/video" element={<Video />} />
                 <Route path="/image" element={<ImageUploader />} />
+                <Route path="/chat" element={<ChatPage />} />
+                <Route path="/video-game" element={VideoGamePage} />
             </Routes>
         </Router>
     );
