@@ -5,8 +5,29 @@ import Video from './videos-stream'
 import ImageUploader from "./image-chunks";
 import ChatPage from "./chatPage";
 import VideoGamePage from "./pages/VideoGamePage";
+import {useEffect} from "react";
+import {getToken} from 'firebase/messaging'
+import {messaging} from "./firebase";
 
 function App() {
+
+    async function requestPermissions() {
+        const permission = await Notification.requestPermission();
+
+        if (permission === "granted") {
+            //Generate Token
+            const token = await  getToken(messaging, {vapidKey:'BHLR0Fbm738oTVvfyhu6dQ_BEUqKq8KgQyIqg3bCtNr1Hmnw23fYO0k02y_qZeHGbV4BX8UUVToxKE2Vqjokt-k'})
+            console.log('Token: ', token)
+        }else if (permission === "denied") {
+            alert('Permission denied for notification');
+        }
+    }
+    //Req user for notification permission
+    useEffect(() => {
+        requestPermissions();
+
+    }, []);
+
     return (
         <Router>
             <Routes>
