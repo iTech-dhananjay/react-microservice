@@ -2,19 +2,20 @@ import React from "react";
 
 const Select = ({ label, id, options, register, error }) => {
     return (
-        <div className="mb-4">
-            <label htmlFor={id} className="block font-semibold mb-1">
+        <div className="flex flex-col">
+            <label htmlFor={id} className="font-semibold mb-1">
                 {label}
             </label>
             <select
                 id={id}
-                className={`w-full p-2 border rounded-md ${
+                {...register}
+                className={`p-2 border rounded-md w-full focus:outline-none ${
                     error ? "border-red-500" : "border-gray-300"
                 }`}
-                {...register}
             >
-                {options.map((option, index) => (
-                    <option key={index} value={option.value}>
+                <option value="">Select {label}</option>
+                {options.map((option) => (
+                    <option key={option.value} value={option.value}>
                         {option.label}
                     </option>
                 ))}
