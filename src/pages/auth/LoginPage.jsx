@@ -6,7 +6,7 @@ import { ToastContainer } from "react-toastify";
 import "../../styles/auth.css";
 
 const LoginPage = () => {
-    const [credentials, setCredentials] = useState({ email: "", password: "" });
+    const [credentials, setCredentials] = useState({ emailOrPhone: "", password: "" });
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { loading } = useSelector((state) => state.auth);
@@ -20,7 +20,7 @@ const LoginPage = () => {
         e.preventDefault();
         const result = await dispatch(loginUser(credentials));
         if (result.meta.requestStatus === "fulfilled") {
-            navigate("/home"); // Redirect to home/dashboard
+            navigate("/"); // Redirect to home/dashboard
         }
     };
 
@@ -31,7 +31,7 @@ const LoginPage = () => {
             <form onSubmit={handleSubmit} className="auth-form">
                 <input
                     type="email"
-                    name="email"
+                    name="emailOrPhone"
                     placeholder="Email"
                     onChange={handleChange}
                     required
