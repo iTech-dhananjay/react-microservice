@@ -1,84 +1,84 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useAuth } from "../../hooks/useAuth";
-import '../../styles/auth.css';
+import { registerUser } from "../../redux/slices/authSlice";
+import "../../styles/auth.css";
 
 const RegisterPage = () => {
     const [formData, setFormData] = useState({
-        name: "",
+        firstName: "",
+        lastName: "",
         email: "",
         password: "",
+        phoneNumber: "",
+        profileImage: null,
+        role: "user",
+        permissions: [],
     });
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
+
     const dispatch = useDispatch();
-    const { register } = useAuth();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
+    const handleFileChange = (e) => {
+        setFormData({ ...formData, profileImage: e.target.files[0] });
+    };
+
+    const handlePermissionChange = (e) => {
+        const { value, checked } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            permissions: checked
+                ? [...prev.permissions, value]
+                : prev.permissions.filter((perm) => perm !== value),
+        }));
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(""); // Clear previous errors
-        setLoading(true); // Show loading state
-
-        try {
-            const response = await dispatch(register(formData));
-            console.log("Registration successful:", response);
-            // Redirect to another page or show success message
-        } catch (err) {
-            setError("Registration failed. Please try again.");
-        } finally {
-            setLoading(false); // Hide loading state after completion
+        const userData = new FormData();
+        for (const key in formData) {
+            if (key === "permissions") {
+                formData.permissions.forEach((perm) => userData.append("permissions[]", perm));
+            } else {
+                userData.append(key, formData[key]);
+            }
         }
+        dispatch(registerUser(userData));
     };
 
     return (
         <div className="auth-container">
-            <h2>Create Account</h2>
+            <h2>Register</h2>
             <form onSubmit={handleSubmit}>
-                <div className="input-group">
-                    <label htmlFor="name">Full Name</label>
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                        placeholder="Enter your full name"
-                    />
+                <input type="text" name="firstName" placeholder="First Name" onChange={handleChange} required />
+                <input type="text" name="lastName" placeholder="Last Name" onChange={handleChange} required />
+                <input type="email" name="email" placeholder="Email" onChange={handleChange} required />
+                <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
+                <input type="tel" name="phoneNumber" placeholder="Phone Number" onChange={handleChange} required />
+                <input type="file" name="profileImage" onChange={handleFileChange} required />
+
+                <div>
+                    <label>
+                        Role:
+                        <select name="role" onChange={handleChange} defaultValue="user">
+                            <option value="user">User</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </label>
                 </div>
-                <div className="input-group">
-                    <label htmlFor="email">Email Address</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        placeholder="Enter your email"
-                    />
+
+                <div>
+                    <label>
+                        Permissions:
+                        <input type="checkbox" value="read" onChange={handlePermissionChange} /> Read
+                        <input type="checkbox" value="write" onChange={handlePermissionChange} /> Write
+                    </label>
                 </div>
-                <div className="input-group">
-                    <label htmlFor="password">Password</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                        placeholder="Enter your password"
-                    />
-                </div>
-                {error && <p className="error-message">{error}</p>}
-                <button type="submit" disabled={loading} className="submit-btn">
-                    {loading ? "Creating Account..." : "Register"}
-                </button>
+
+                <button type="submit">Register</button>
             </form>
         </div>
     );
