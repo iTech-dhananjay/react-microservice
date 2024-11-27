@@ -10,9 +10,10 @@ const initialState = {
     error: null,
 };
 
+
 // Async thunk for registration
 export const registerUser = createAsyncThunk(
-    "auth/registerUser",
+    "registerUser",
     async (userData, { rejectWithValue }) => {
         try {
             const data = await authApi.registerUser(userData);
@@ -28,7 +29,7 @@ export const registerUser = createAsyncThunk(
 
 // Async thunk for login
 export const loginUser = createAsyncThunk(
-    "auth/loginUser",
+    "loginUser",
     async (credentials, { rejectWithValue }) => {
         try {
             const data = await authApi.loginUser(credentials);
