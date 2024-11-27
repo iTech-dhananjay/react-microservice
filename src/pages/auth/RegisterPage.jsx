@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../api/authApi";
-import { loginSuccess } from "../../redux/slices/authSlice";
+import {useAuth} from "../../hooks/useAuth";
 
 const RegisterPage = () => {
     const [formData, setFormData] = useState({
@@ -11,6 +11,7 @@ const RegisterPage = () => {
     });
     const [error, setError] = useState("");
     const dispatch = useDispatch();
+    const {register} = useAuth()
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -19,14 +20,9 @@ const RegisterPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const data = await registerUser(formData);
-            localStorage.setItem("sessionToken", data.token);
-            dispatch(loginSuccess({ user: data.user, token: data.token }));
-            alert("Registration successful!");
-        } catch (err) {
-            setError("Registration failed! " + err.message);
-        }
+        dispatch(register(formData)).then((res) => {
+            console.log(res);
+        })
     };
 
     return (
