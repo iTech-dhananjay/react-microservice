@@ -3,17 +3,21 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import AppRoutes from "./routes/AppRoutes";
-import "./styles/index.css";
-import "./styles/auth.css";
-import {ToastContainer} from "react-toastify"; // Include auth styles
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import "./styles/index.css";
+import "./styles/auth.css"; // Ensure custom auth styles are included
 
 const App = () => {
     return (
         <Provider store={store}>
-            <ToastContainer hideProgressBar theme="dark" autoClose={2000} />
             <Router>
+                <ToastContainer
+                    hideProgressBar
+                    theme="dark"
+                    autoClose={2000}
+                    position="top-right" // Positioning for better visibility
+                />
                 <AppRoutes />
             </Router>
         </Provider>
@@ -21,53 +25,3 @@ const App = () => {
 };
 
 export default App;
-
-
-
-
-
-
-
-// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import Home from "./Home";
-// import PaymentSuccess from "./payment-success";
-// import Video from './videos-stream'
-// import ImageUploader from "./image-chunks";
-// import ChatPage from "./chatPage";
-// import {useEffect} from "react";
-// import {getToken} from 'firebase/messaging'
-// import {messaging} from "./firebase";
-//
-// function App() {
-//
-//     async function requestPermissions() {
-//         const permission = await Notification.requestPermission();
-//
-//         if (permission === "granted") {
-//             //Generate Token
-//             const token = await  getToken(messaging, {vapidKey:'BHLR0Fbm738oTVvfyhu6dQ_BEUqKq8KgQyIqg3bCtNr1Hmnw23fYO0k02y_qZeHGbV4BX8UUVToxKE2Vqjokt-k'})
-//             console.log('Token: ', token)
-//         }else if (permission === "denied") {
-//             alert('Permission denied for notification');
-//         }
-//     }
-//     //Req user for notification permission
-//     useEffect(() => {
-//         requestPermissions();
-//
-//     }, []);
-//
-//     return (
-//         <Router>
-//             <Routes>
-//                 <Route path="/" element={<Home />} />
-//                 <Route path="/paymentsuccess" element={<PaymentSuccess />} />
-//                 <Route path="/video" element={<Video />} />
-//                 <Route path="/image" element={<ImageUploader />} />
-//                 <Route path="/chat" element={<ChatPage />} />
-//             </Routes>
-//         </Router>
-//     );
-// }
-//
-// export default App;

@@ -1,5 +1,4 @@
-import { useDispatch } from "react-redux";
-import { loginSuccess, logoutSuccess } from "../redux/slices/authSlice";
+import { useDispatch } from "react-redux"
 import { loginUser, registerUser, logoutUser } from "../api/authApi";
 import {useNavigate} from "react-router-dom";
 
@@ -11,7 +10,7 @@ export const useAuth = () => {
         try {
             const data = await loginUser(credentials);
             sessionStorage.setItem("sessionToken", data.token); // Change from localStorage to sessionStorage
-            dispatch(loginSuccess({ user: data.user, token: data.token }));
+          //  dispatch(loginSuccess({ user: data.user, token: data.token }));
         } catch (error) {
             console.error("Login failed", error);
             throw error;
@@ -24,7 +23,6 @@ export const useAuth = () => {
 
             if(data){
                 sessionStorage.setItem("sessionToken", data.token); // Change from localStorage to sessionStorage
-                dispatch(loginSuccess({ user: data.user, token: data.token }));
                 navigate("/");
             }
         } catch (error) {
@@ -37,7 +35,7 @@ export const useAuth = () => {
         try {
             await logoutUser();
             sessionStorage.removeItem("sessionToken"); // Change from localStorage to sessionStorage
-            dispatch(logoutSuccess());
+          //  dispatch(logoutSuccess());
         } catch (error) {
             console.error("Logout failed", error);
         }
