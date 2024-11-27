@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { registerUser } from "../../api/authApi";
 import {useAuth} from "../../hooks/useAuth";
 
 const RegisterPage = () => {
