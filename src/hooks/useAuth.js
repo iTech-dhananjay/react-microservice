@@ -1,9 +1,11 @@
 import { useDispatch } from "react-redux";
 import { loginSuccess, logoutSuccess } from "../redux/slices/authSlice";
 import { loginUser, registerUser, logoutUser } from "../api/authApi";
+import {useNavigate} from "react-router-dom";
 
 export const useAuth = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const login = async (credentials) => {
         try {
@@ -19,8 +21,12 @@ export const useAuth = () => {
     const register = async (userData) => {
         try {
             const data = await registerUser(userData);
-            sessionStorage.setItem("sessionToken", data.token); // Change from localStorage to sessionStorage
-            dispatch(loginSuccess({ user: data.user, token: data.token }));
+
+            if(data){
+                sessionStorage.setItem("sessionToken", data.token); // Change from localStorage to sessionStorage
+                dispatch(loginSuccess({ user: data.user, token: data.token }));
+                navigate("/");
+            }
         } catch (error) {
             console.error("Registration failed", error);
             throw error;
