@@ -1,0 +1,46 @@
+/* home.css */
+
+.home-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.home-page-header {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.user-info {
+    background-color: #e1f5fe;
+    padding: 15px;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.user-info h3 {
+    color: #00796b;
+    font-size: 1.5rem;
+}
+
+.user-info p {
+    color: #555;
+    font-size: 1rem;
+}
+
+.guest-message {
+    color: #e57373;
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 20px;
+}
