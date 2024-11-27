@@ -1,0 +1,6 @@
+/* src/styles/index.css */
+@import "./tailwind.css";
+/* Retain existing manual styles */
+@import "./auth.css";
+@import "./home.css";
+@import "./users.css";
