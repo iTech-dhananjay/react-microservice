@@ -134,6 +134,7 @@ const containerStyle = {
 const headerStyle = {
     textAlign: 'center',
     color: '#333',
+    fontWeight:'bold'
 };
 
 const inputStyle = {
