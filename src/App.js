@@ -4,11 +4,15 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import AppRoutes from "./routes/AppRoutes";
 import "./styles/index.css";
-import "./styles/auth.css"; // Include auth styles
+import "./styles/auth.css";
+import {ToastContainer} from "react-toastify"; // Include auth styles
+import "react-toastify/dist/ReactToastify.css";
+
 
 const App = () => {
     return (
         <Provider store={store}>
+            <ToastContainer hideProgressBar theme="dark" autoClose={2000} />
             <Router>
                 <AppRoutes />
             </Router>

@@ -17,7 +17,7 @@ export const registerUser = createAsyncThunk(
     async (userData, { rejectWithValue }) => {
         try {
             const data = await authApi.registerUser(userData);
-            toast.success("Registration successful!");
+            data && toast.success("Registration successful!");
             return data;
         } catch (error) {
             const errorMsg = error.response?.data?.message || "Registration failed";
