@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { validateForm } from "../../utils/validators";
 import {useDispatch} from "react-redux";
 import {useAuth} from "../../hooks/useAuth";
-import registerIcon from '../../assets/icons/register-icon.png';
+import registerIcon from '../../assets/icons/register.png';
 
 
 
