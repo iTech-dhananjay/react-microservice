@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { validateForm } from "../../utils/validators"; // Import validation utility
+import { validateForm } from "../../utils/validators";
+import {useDispatch} from "react-redux";
+import {useAuth} from "../../hooks/useAuth";
+
+
 
 const RegisterPage = () => {
+    const {register} = useAuth()
+    const dispatch = useDispatch();
     const [form, setForm] = useState({
         firstName: "",
         lastName: "",
@@ -24,6 +30,8 @@ const RegisterPage = () => {
             toast.error("Please fix the errors in the form");
             return;
         }
+        dispatch(register(form))
+
         console.log(form);
         toast.success("Form submitted successfully!");
         setErrors({});
