@@ -4,8 +4,8 @@ import HomePage from "../pages/HomePage";
 import NotFoundPage from "../pages/NotFoundPage";
 import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
-// import UserListPage from "../pages/users/UserListPage";
-import ProtectedRoute from "./ProtectedRoute"; // Protecting routes like UserListPage
+import ProtectedRoute from "./ProtectedRoute";
+import UserListPage from "../pages/users/UserListPage"; // Protecting routes like UserListPage
 
 const AppRoutes = () => {
     return (
@@ -14,6 +14,7 @@ const AppRoutes = () => {
             <Route path="/nopage" element={<NotFoundPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/users" element={<UserListPage />} />
 
             {/* Protected routes */}
             <Route element={<ProtectedRoute />}>
