@@ -5,9 +5,10 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const UserListPage = () => {
-    const { fetchUsers } = useUsers()
     const dispatch = useDispatch();
-    const { users, totalPages } = useSelector((state) => state.user); // Assume state contains user data
+    const { fetchUsers } = useUsers()
+    const { users, totalPages } = useSelector((state) => state?.user); // Accessing state from Redux
+
     const [filters, setFilters] = useState({
         search: "",
         status: "",
@@ -17,20 +18,34 @@ const UserListPage = () => {
     });
     const [page, setPage] = useState(1);
 
-
-    const handleFilterChange = async (e) => {
-        const {name, value} = e.target;
-        setFilters((prev) => ({...prev, [name]: value}));
-        await dispatch(fetchUsers(users));
+// Fetch users manually when filters or page changes
+    const fetchUsersData = () => {
+        try {
+            dispatch(fetchUsers({ filters, page })); // Dispatch the fetchUsers action
+        } catch (error) {
+            toast.error("Failed to fetch users");
+            console.error(error);
+        }
     };
 
+// Handle filter changes
+    const handleFilterChange = (e) => {
+        const { name, value } = e.target;
+        setFilters((prev) => ({ ...prev, [name]: value }));
+        fetchUsersData(); // Fetch data whenever filters are updated
+    };
+
+// Handle search input changes
     const handleSearchChange = (e) => {
         setFilters((prev) => ({ ...prev, search: e.target.value }));
+        fetchUsersData(); // Fetch data whenever search input changes
     };
 
+// Handle page change
     const handlePageChange = (newPage) => {
         if (newPage > 0 && newPage <= totalPages) {
             setPage(newPage);
+            fetchUsersData(); // Fetch data for the new page
         } else {
             toast.error("Invalid page number");
         }
