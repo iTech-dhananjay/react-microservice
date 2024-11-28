@@ -21,7 +21,7 @@ const UserListPage = () => {
     const handleFilterChange = async (e) => {
         const {name, value} = e.target;
         setFilters((prev) => ({...prev, [name]: value}));
-        await dispatch(fetchUsers());
+        await dispatch(fetchUsers(users));
     };
 
     const handleSearchChange = (e) => {

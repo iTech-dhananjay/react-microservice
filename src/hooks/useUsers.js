@@ -1,25 +1,17 @@
-import { useState, useEffect } from "react";
-import { API_ENDPOINTS } from "../api/apiEndpoints";
-import api from "../api/apiWrapper";
+import {getUsers} from "../api/authApi";
 
 export const useUsers = () => {
-    const [users, setUsers] = useState([]);
-    const [loading, setLoading] = useState(true);
 
-    const fetchUsers = async () => {
+    const fetchUsers = async (usersData) => {
         try {
-            const response = await api.get(API_ENDPOINTS.GET_USERS);
-            setUsers(response.data);
+            const data = await getUsers(usersData)
+            return data
         } catch (error) {
             console.error("Failed to fetch users", error);
-        } finally {
-            setLoading(false);
         }
     };
 
-    useEffect(() => {
-        fetchUsers();
-    }, []);
 
-    return { users, loading };
+
+    return { fetchUsers };
 };
