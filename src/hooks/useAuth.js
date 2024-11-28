@@ -10,7 +10,7 @@ export const useAuth = () => {
         try {
             const data = await loginUser(credentials);
             sessionStorage.setItem("sessionToken", data.token); // Change from localStorage to sessionStorage
-          //  dispatch(loginSuccess({ user: data.user, token: data.token }));
+            navigate("/");
         } catch (error) {
             console.error("Login failed", error);
             throw error;
@@ -23,7 +23,7 @@ export const useAuth = () => {
 
             if(data){
                 sessionStorage.setItem("sessionToken", data.token); // Change from localStorage to sessionStorage
-                navigate("/");
+                navigate("/login");
             }
         } catch (error) {
             console.error("Registration failed", error);

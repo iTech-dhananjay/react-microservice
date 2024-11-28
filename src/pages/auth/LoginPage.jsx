@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../redux/slices/authSlice";
+import {useAuth} from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 import "../../styles/auth.css";
 
 const LoginPage = () => {
     const [credentials, setCredentials] = useState({ emailOrPhone: "", password: "" });
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const {login} = useAuth()
     const { loading } = useSelector((state) => state.auth);
 
     const handleChange = (e) => {
@@ -18,10 +19,8 @@ const LoginPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const result = await dispatch(loginUser(credentials));
-        if (result.meta.requestStatus === "fulfilled") {
-            navigate("/"); // Redirect to home/dashboard
-        }
+        await dispatch(login(credentials));
+        toast.success('Login successfully');
     };
 
     return (
