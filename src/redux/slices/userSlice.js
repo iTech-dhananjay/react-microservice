@@ -10,18 +10,18 @@ const initialState = {
 };
 
 
-// Async thunk for registration
+// Async thunk for fetching users
 export const getUsers = createAsyncThunk(
-    "getUsers",
+    "users/getUsers", // Unique action type
     async (userData, { rejectWithValue }) => {
         try {
-            const data = await authApi.getUsers(userData);
-            data && toast.success("Fetch users successful!");
-            return data;
+            const data = await authApi.getUsers(userData); // API call
+            toast.success("Fetch users successful!");
+            return data; // Expecting `{ users, totalPages }`
         } catch (error) {
-            const errorMsg = error.response?.data?.message || "Registration failed";
+            const errorMsg = error.response?.data?.message || "Failed to fetch users";
             toast.error(errorMsg);
-            return rejectWithValue(errorMsg);
+            return rejectWithValue(errorMsg); // Reject with error message
         }
     }
 );
@@ -36,14 +36,15 @@ const userSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(getUsers().fulfilled, (state) => {
+            .addCase(getUsers.fulfilled, (state, action) => {
                 state.loading = false;
+                state.users = action.payload.users; // Assuming `data` contains `users` and `totalPages`
+                state.totalPages = action.payload.totalPages;
             })
-            .addCase(getUsers().rejected, (state, action) => {
+            .addCase(getUsers.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-            })
-
+            });
     },
 });
 
