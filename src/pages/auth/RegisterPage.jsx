@@ -4,6 +4,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { validateForm } from "../../utils/validators";
 import {useDispatch} from "react-redux";
 import {useAuth} from "../../hooks/useAuth";
+import registerIcon from '../../assets/icons/register-icon.png';
+
 
 
 
@@ -56,7 +58,7 @@ const RegisterPage = () => {
             <div className="w-full max-w-md bg-white rounded-xl shadow-lg border border-gray-200">
                 {/* Logo Section */}
                 <div className="flex justify-center py-6 border-b">
-                    <img src="/logo-placeholder.png" alt="Logo" className="w-24 h-24" />
+                    <img src={registerIcon} alt="Logo" className="w-24 h-24" />
                 </div>
                 {/* Form Section */}
                 <div className="p-8">
