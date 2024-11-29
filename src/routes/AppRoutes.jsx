@@ -4,6 +4,7 @@ import HomePage from "../pages/HomePage";
 import NotFoundPage from "../pages/NotFoundPage";
 import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
+import SingleUserDetailsPage from "../pages/users/UserDetailPage";
 import ProtectedRoute from "./ProtectedRoute";
 import UserListPage from "../pages/users/UserListPage"; // Protecting routes like UserListPage
 
@@ -15,6 +16,7 @@ const AppRoutes = () => {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/users" element={<UserListPage />} />
+            <Route path="/user/:userId" element={<SingleUserDetailsPage />} />
 
             {/* Protected routes */}
             <Route element={<ProtectedRoute />}>

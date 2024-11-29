@@ -20,3 +20,8 @@ export const getUsers = async () => {
     const response = await api.get(API_ENDPOINTS.GET_USERS);
     return response.data;
 }
+
+export const getUser = async (userId) => {
+    const response = await api.get(API_ENDPOINTS.GET_USER, userId)
+    return response.data;
+}

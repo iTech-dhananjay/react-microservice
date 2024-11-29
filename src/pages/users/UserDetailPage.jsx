@@ -1,15 +1,25 @@
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom"; // For routing
-import { useSelector } from "react-redux"; // To fetch user data from Redux store
+import { useParams, useNavigate } from "react-router-dom";
+import {getUser} from "../../redux/slices/userSlice";
+import {useDispatch, useSelector} from "react-redux"; // To fetch user data from Redux store
 
 const SingleUserDetailsPage = () => {
-    const { userId } = useParams(); // Get userId from route parameters
+    const { userId } = useParams();
+    const decodedId = decodeURIComponent(userId)
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // Assuming Redux state has `users` and we fetch the single user based on the userId
+    // Get the user from the Redux store (find by userId)
     const user = useSelector((state) =>
-        state.user.users.find((u) => u.id === parseInt(userId))
+        state.user.users.find((u) => u._id === parseInt(decodedId))
     );
+
+    const loading = useSelector((state) => state.user.loading);
+    const error = useSelector((state) => state.user.error);
+
+    if (!user && !loading && !error) {
+        dispatch(getUser({ userId }));  // Trigger the action to fetch the user if not already in store
+    }
 
     if (!user) {
         return (
@@ -33,7 +43,7 @@ const SingleUserDetailsPage = () => {
                 {/* Header */}
                 <div className="flex justify-between items-center px-6 py-4 border-b">
                     <h2 className="text-xl font-semibold text-gray-700">
-                        User Details - {user.name}
+                        User Details - {user?.firstName}
                     </h2>
                     <button
                         onClick={() => navigate("/users")}
@@ -135,7 +145,7 @@ const SingleUserDetailsPage = () => {
                 {/* Footer */}
                 <div className="flex justify-end items-center px-6 py-4 border-t">
                     <button
-                        onClick={() => navigate(`/edit-user/${user.id}`)}
+                        onClick={() => navigate(`/edit-user/${user?.id}`)}
                         className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 mr-3"
                     >
                         Edit User

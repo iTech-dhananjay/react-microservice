@@ -15,8 +15,7 @@ export const getUsers = createAsyncThunk(
     "getUsers", // Unique action type
     async (userData, { rejectWithValue }) => {
         try {
-            const data = await authApi.getUsers(userData); // API call
-            console.log(data,'data')
+            const data = await authApi.getUsers(); // API call
             toast.success("Fetch users successful!");
             return data; // Expecting `{ users, totalPages }`
         } catch (error) {
@@ -26,6 +25,21 @@ export const getUsers = createAsyncThunk(
         }
     }
 );
+
+export const getUser = createAsyncThunk(
+    "getUser",
+    async (userId, { rejectWithValue }) => {
+        try {
+            const data = await authApi.getUser(userId)
+            toast.success('Fetch user successful!');
+            return data;
+        }catch(error){
+            const errorMsg = error.response?.data?.message || "Failed to fetch users";
+            toast.error(errorMsg);
+            return rejectWithValue(errorMsg);
+        }
+    }
+)
 
 const userSlice = createSlice({
     name: "users",
@@ -45,7 +59,21 @@ const userSlice = createSlice({
             .addCase(getUsers.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-            });
+            })
+            .addCase(getUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(getUser.fulfilled, (state, action) => {
+                state.loading = false;
+                state.users = action.payload.users; // Assuming `data` contains `users` and `totalPages`
+                state.totalPages = action.payload.totalPages;
+            })
+            .addCase(getUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+
     },
 });
 
