@@ -3,11 +3,10 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+import { loginUser} from '../../redux/slices/authSlice'
 import loginIcon from "../../assets/icons/login.png";
 
 const LoginPage = () => {
-    const { login } = useAuth();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { loading } = useSelector((state) => state.auth);
@@ -20,7 +19,7 @@ const LoginPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await dispatch(login(credentials));
+        await dispatch(loginUser(credentials));
         toast.success("Login successful!");
         navigate("/dashboard"); // Redirect to dashboard after login
     };
