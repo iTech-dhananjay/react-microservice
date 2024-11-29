@@ -5,5 +5,5 @@ export const API_ENDPOINTS = {
     LOGIN: `${API_BASE_URL}/ecom/auth/login`,
     LOGOUT: `${API_BASE_URL}/ecom/auth/logout`,
     GET_USERS: `${API_BASE_URL}/ecom/user/list`,
-    GET_USER: (userId) => `${API_BASE_URL}/ecom/user/id=${userId}`
+    GET_USER: (userId) => `${API_BASE_URL}/ecom/user/${userId}`
 };

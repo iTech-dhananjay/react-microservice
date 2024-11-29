@@ -5,20 +5,20 @@ import {useDispatch, useSelector} from "react-redux"; // To fetch user data from
 
 const SingleUserDetailsPage = () => {
     const { userId } = useParams(); // Get userId from URL parameters
-    const decodedId = decodeURIComponent(userId); // Decode the userId
     const dispatch = useDispatch(); // Initialize dispatch
     const navigate = useNavigate(); // For navigation
 
     // Access the user, loading, and error states from Redux store
     const user = useSelector((state) =>
-        state.user.users.find((u) => u._id === decodedId)
+        state.user.users.find((u) => u._id === userId)
     );
+    console.log(userId,'user')
     const loading = useSelector((state) => state.user.loading);
     const error = useSelector((state) => state.user.error);
 
     // Trigger fetch only when necessary
     if (!user && !loading && !error) {
-        dispatch(getUser(decodedId)); // Fetch the user by decodedId
+        dispatch(getUser(userId)); // Fetch the user by decodedId
         return <div>Loading...</div>; // Show a loading state while the data is being fetched
     }
 
