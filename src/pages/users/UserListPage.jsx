@@ -133,6 +133,7 @@ const UserListPage = () => {
                             <th className="p-3 border-b">Name</th>
                             <th className="p-3 border-b">Email</th>
                             <th className="p-3 border-b">Status</th>
+                            <th className="p-3 border-b">Role</th>
                             <th className="p-3 border-b">Verification Status</th>
                             <th className="p-3 border-b">Actions</th>
                         </tr>
@@ -141,7 +142,7 @@ const UserListPage = () => {
                         {users?.length ? (
                             users.map((user) => (
                                 <tr key={user.id} className="hover:bg-gray-50">
-                                    <td className="p-3 border-b">{user.name}</td>
+                                    <td className="p-3 border-b">{user.firstName}</td>
                                     <td className="p-3 border-b">{user.email}</td>
                                     <td className="p-3 border-b">
                                             <span
@@ -154,6 +155,7 @@ const UserListPage = () => {
                                                 {user.status}
                                             </span>
                                     </td>
+                                    <td className="p-3 border-b"> {user?.role}</td>
                                     <td className="p-3 border-b">{user.verificationStatus}</td>
                                     <td className="p-3 border-b">
                                         <button className="text-indigo-600 hover:underline">
