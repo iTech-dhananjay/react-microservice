@@ -6,14 +6,32 @@ const Navbar = () => {
     const dispatch = useDispatch();
 
     return (
-        <header className="bg-blue-600 text-white px-4 py-2 flex justify-between items-center">
-            <button
-                className="text-2xl focus:outline-none"
-                onClick={() => dispatch(toggleSidebar())}
-            >
-                ☰
-            </button>
-            <h1 className="text-lg font-bold">My App</h1>
+        <header className="bg-blue-600 text-white px-6 py-4 flex items-center justify-between shadow-md fixed top-0 left-0 w-full z-10">
+            {/* Sidebar Toggle Button */}
+            <div className="flex items-center">
+                <button
+                    className="text-3xl focus:outline-none mr-4"
+                    onClick={() => dispatch(toggleSidebar())}
+                >
+                    ☰
+                </button>
+                <h1 className="text-xl font-bold tracking-wide">
+                    My App
+                </h1>
+            </div>
+
+            {/* Right-side Menu (optional) */}
+            <nav className="flex items-center space-x-6">
+                <a href="/dashboard" className="hover:underline">
+                    Dashboard
+                </a>
+                <a href="/settings" className="hover:underline">
+                    Settings
+                </a>
+                <a href="/profile" className="hover:underline">
+                    Profile
+                </a>
+            </nav>
         </header>
     );
 };
