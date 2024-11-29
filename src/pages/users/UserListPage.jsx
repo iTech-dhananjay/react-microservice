@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useUsers } from "../../hooks/useUsers"; // Redux action to fetch users
+import { getUsers } from "../../redux/slices/userSlice";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const UserListPage = () => {
     const dispatch = useDispatch();
-    const { fetchUsers } = useUsers()
     const { users, totalPages } = useSelector((state) => state?.user); // Accessing state from Redux
 
     const [filters, setFilters] = useState({
@@ -21,7 +20,7 @@ const UserListPage = () => {
 // Fetch users manually when filters or page changes
     const fetchUsersData = () => {
         try {
-            dispatch(fetchUsers({ filters, page })); // Dispatch the fetchUsers action
+            dispatch(getUsers({ filters, page })); // Dispatch the fetchUsers action
         } catch (error) {
             toast.error("Failed to fetch users");
             console.error(error);
