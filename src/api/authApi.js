@@ -22,6 +22,6 @@ export const getUsers = async () => {
 }
 
 export const getUser = async (userId) => {
-    const response = await api.get(API_ENDPOINTS.GET_USER, userId)
+    const response = await api.get(API_ENDPOINTS.GET_USER(userId));
     return response.data;
-}
+};

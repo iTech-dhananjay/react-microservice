@@ -66,8 +66,7 @@ const userSlice = createSlice({
             })
             .addCase(getUser.fulfilled, (state, action) => {
                 state.loading = false;
-                state.users = action.payload.users; // Assuming `data` contains `users` and `totalPages`
-                state.totalPages = action.payload.totalPages;
+                state.users.push(action.payload); // Add the fetched user to the `users` array
             })
             .addCase(getUser.rejected, (state, action) => {
                 state.loading = false;

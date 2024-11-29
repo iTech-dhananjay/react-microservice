@@ -4,21 +4,22 @@ import {getUser} from "../../redux/slices/userSlice";
 import {useDispatch, useSelector} from "react-redux"; // To fetch user data from Redux store
 
 const SingleUserDetailsPage = () => {
-    const { userId } = useParams();
-    const decodedId = decodeURIComponent(userId)
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const { userId } = useParams(); // Get userId from URL parameters
+    const decodedId = decodeURIComponent(userId); // Decode the userId
+    const dispatch = useDispatch(); // Initialize dispatch
+    const navigate = useNavigate(); // For navigation
 
-    // Get the user from the Redux store (find by userId)
+    // Access the user, loading, and error states from Redux store
     const user = useSelector((state) =>
-        state.user.users.find((u) => u._id === parseInt(decodedId))
+        state.user.users.find((u) => u._id === decodedId)
     );
-
     const loading = useSelector((state) => state.user.loading);
     const error = useSelector((state) => state.user.error);
 
+    // Trigger fetch only when necessary
     if (!user && !loading && !error) {
-        dispatch(getUser({ userId }));  // Trigger the action to fetch the user if not already in store
+        dispatch(getUser(decodedId)); // Fetch the user by decodedId
+        return <div>Loading...</div>; // Show a loading state while the data is being fetched
     }
 
     if (!user) {
