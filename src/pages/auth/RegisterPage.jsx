@@ -3,14 +3,13 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { validateForm } from "../../utils/validators";
 import {useDispatch} from "react-redux";
-import {useAuth} from "../../hooks/useAuth";
+import {registerUser} from "../../redux/slices/authSlice";
 import registerIcon from '../../assets/icons/register.png';
 
 
 
 
 const RegisterPage = () => {
-    const {register} = useAuth()
     const dispatch = useDispatch();
     const [form, setForm] = useState({
         firstName: "",
@@ -24,7 +23,7 @@ const RegisterPage = () => {
 
     const [errors, setErrors] = useState({});
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
         const validationErrors = validateForm(form); // Call validation utility
         if (Object.keys(validationErrors).length > 0) {
@@ -32,7 +31,7 @@ const RegisterPage = () => {
             toast.error("Please fix the errors in the form");
             return;
         }
-        dispatch(register(form))
+        await dispatch(registerUser(form))
 
         console.log(form);
         toast.success("Form submitted successfully!");

@@ -12,10 +12,11 @@ const initialState = {
 
 // Async thunk for fetching users
 export const getUsers = createAsyncThunk(
-    "users/getUsers", // Unique action type
+    "getUsers", // Unique action type
     async (userData, { rejectWithValue }) => {
         try {
             const data = await authApi.getUsers(userData); // API call
+            console.log(data,'data')
             toast.success("Fetch users successful!");
             return data; // Expecting `{ users, totalPages }`
         } catch (error) {
