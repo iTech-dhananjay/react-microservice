@@ -12,7 +12,6 @@ const SingleUserDetailsPage = () => {
     const user = useSelector((state) =>
         state.user.users.find((u) => u._id === userId)
     );
-    console.log(userId,'user')
     const loading = useSelector((state) => state.user.loading);
     const error = useSelector((state) => state.user.error);
 
