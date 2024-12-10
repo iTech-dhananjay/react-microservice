@@ -10,13 +10,15 @@ const AppRoutes = () => {
         <Routes>
             {/* Public routes */}
             <Route path="/" element={<HomePage />} />
+            {/* User-related routes */}
+            <Route path="/*" element={<UserRoutes />} />
+
             <Route path="/nopage" element={<NotFoundPage />} />
 
             {/* Auth routes */}
             <Route path="/*" element={<AuthRoutes />} />
 
-            {/* User-related routes */}
-            <Route path="/*" element={<UserRoutes />} />
+
         </Routes>
     );
 };
