@@ -6,7 +6,7 @@ const Navbar = () => {
     const dispatch = useDispatch();
 
     return (
-        <header className="bg-blue-600 text-white px-6 py-4 flex items-center justify-between shadow-md fixed top-0 left-0 w-full z-10">
+        <header className="bg-gradient-to-r from-gray-900 to-gray-700 text-white px-6 py-4 flex items-center justify-between shadow-lg fixed top-0 left-0 w-full z-20">
             {/* Sidebar Toggle Button */}
             <div className="flex items-center">
                 <button
@@ -20,15 +20,15 @@ const Navbar = () => {
                 </h1>
             </div>
 
-            {/* Right-side Menu (optional) */}
-            <nav className="flex items-center space-x-6">
-                <a href="/dashboard" className="hover:underline">
+            {/* Right-side Menu */}
+            <nav className="flex items-center space-x-6 text-sm">
+                <a href="/dashboard" className="hover:text-gray-300 transition-colors">
                     Dashboard
                 </a>
-                <a href="/settings" className="hover:underline">
+                <a href="/settings" className="hover:text-gray-300 transition-colors">
                     Settings
                 </a>
-                <a href="/profile" className="hover:underline">
+                <a href="/profile" className="hover:text-gray-300 transition-colors">
                     Profile
                 </a>
             </nav>
