@@ -6,8 +6,8 @@ import RegisterPage from "../pages/auth/RegisterPage";
 const AuthRoutes = () => {
     return (
         <Routes>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<RegisterPage />} />
         </Routes>
     );
 };

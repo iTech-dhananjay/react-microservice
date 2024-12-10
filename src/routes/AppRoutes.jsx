@@ -2,25 +2,25 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import NotFoundPage from "../pages/NotFoundPage";
-import LoginPage from "../pages/auth/LoginPage";
-import RegisterPage from "../pages/auth/RegisterPage";
+import AuthRoutes from "./AuthRoutes"; // Importing AuthRoutes
+import ProtectedRoute from "./ProtectedRoute"; // Protecting routes
+import UserListPage from "../pages/users/UserListPage";
 import SingleUserDetailsPage from "../pages/users/UserDetailPage";
-import ProtectedRoute from "./ProtectedRoute";
-import UserListPage from "../pages/users/UserListPage"; // Protecting routes like UserListPage
 
 const AppRoutes = () => {
     return (
         <Routes>
+            {/* Public routes */}
             <Route path="/" element={<HomePage />} />
             <Route path="/nopage" element={<NotFoundPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/users" element={<UserListPage />} />
-            <Route path="/user/:userId" element={<SingleUserDetailsPage />} />
+
+            {/* Auth routes */}
+            <Route path="/*" element={<AuthRoutes />} />
 
             {/* Protected routes */}
             <Route element={<ProtectedRoute />}>
-                {/*<Route path="/users" element={<UserListPage />} />*/}
+                <Route path="/users" element={<UserListPage />} />
+                <Route path="/user/:userId" element={<SingleUserDetailsPage />} />
             </Route>
         </Routes>
     );
